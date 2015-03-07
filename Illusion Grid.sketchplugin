@@ -1,0 +1,40 @@
+(function() {
+
+	// Get the current Page (or Artboard)
+	var page = [doc currentPage],
+		artboard = [page currentArtboard],
+		current = artboard ? artboard : page;
+
+	// Prompt user for grid size
+	var gridSize = [doc askForUserInput:'What grid size?' initialValue:'5'];
+
+	// Loops!
+	for(var y = 0; y < gridSize; y++) {
+		for(var x = 0; x < gridSize; x++) {
+
+		// Add a rectangle layer to the current scope
+		var layer = [[current addLayerOfType:'rectangle'] embedInShapeGroup];
+
+		    // Create the color "black"
+			var color = [[MSColor alloc] init];
+			[color setRed: 0];
+			[color setGreen: 0];
+			[color setBlue: 0];
+			[color setAlpha: 1];
+
+			// Apply the color to the layer
+			var fills = [[layer style] fills];
+			if([fills count] <= 0) [fills addNewStylePart];
+			[[[layer style] fill] setColor: color];
+
+		    // Size the layer
+			[[layer frame] setWidth: 40];
+			[[layer frame] setHeight: 40];
+
+		    // Position the layer (absolutely)
+			[[layer absoluteRect] setX: x*50];
+			[[layer absoluteRect] setY: y*50];
+
+		}
+	}
+})()
